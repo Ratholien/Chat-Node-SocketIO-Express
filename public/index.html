@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="img/photo.png" type="image/x-icon">
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <!--JS-->
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous">
+    </script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="index.js"></script>
+
+    <!--Title-->
+    <title>Chat Node - Express - Socket.io</title>
+</head>
+
+<body>
+
+<!-- Modal Structure -->
+<div id="datosModal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <form><!--action="/upload" method='POST' enctype='multipart/form-data'-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">account_circle</i>
+                    <input id="nombre" type="text" class="validate" autocomplete="off">
+                    <label for="nombre">Nombre</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">sms</i>
+                    <input id="estado" type="text" class="validate" autocomplete="off">
+                    <label for="estado">Estado</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="file-field input-field">
+                    <div class="btnFoto">
+                        <span>Foto</span>
+                        <input type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container imgPred">
+                    <img src="img/l0_sprite_01.png" alt="">
+                    <img src="img/l0_sprite_02.png" alt="">
+                    <img src="img/l0_sprite_03.png" alt="">
+                    <img src="img/l0_sprite_04.png" alt="">
+                    <img src="img/l0_sprite_05.png" alt="">
+                    <img src="img/l0_sprite_06.png" alt="">
+                    <img src="img/l0_sprite_07.png" alt="">
+                    <img src="img/l0_sprite_08.png" alt="">
+                    <img src="img/l0_sprite_09.png" alt="">
+                    <img src="img/l0_sprite_10.png" alt="">
+                    <img src="img/l0_sprite_12.png" alt="">
+                    <img src="img/l0_sprite_13.png" alt="">
+                    <img src="img/l0_sprite_14.png" alt="">
+                    <img src="img/l0_sprite_15.png" alt="">
+                    <img src="img/l0_sprite_16.png" alt="">
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="modal-footer">
+            <a id="enviarDatosModal" class="btn-flat waves-effect waves-light" name="action">Aceptar
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<!--SIDE NAV-->
+<ul id="slide-out" class="side-nav fixed">
+    <li>
+        <div class="userView">
+            <div class="background">
+                <img id="sideNavImg" src="img/westworldmaze.png">
+            </div>
+            <img class="circle" src="img/symbol.jpg">
+            <span id="sideNavNombre" class="white-text name"></span>
+            <span id="sideNavEstado" class="white-text email"></span>
+        </div>
+    </li>
+    <!--Lista de Usuarios Conectados  -->
+    <div class="connectedUsers">
+        <ul class="collection">
+        </ul>
+    </div>
+
+</ul>
+<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+
+<!--CONTENIO BRAH-->
+
+<div class="main">
+    <div class="chatMsg">
+        <ul id="messages">
+        </ul>
+    </div>
+
+    <form id="form">
+        <div class="input-field inline">
+            <input id="m" autocomplete="off"/>
+        </div>
+        <div class="input-field inline">
+            <button id="enviarbtn" class="btn waves-effect waves-light"
+                    name="action">
+                <i class="material-icons ">send</i></button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
