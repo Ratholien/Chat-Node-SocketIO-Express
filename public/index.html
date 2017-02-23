@@ -32,7 +32,7 @@
 <!-- Modal Structure -->
 <div id="datosModal" class="modal modal-fixed-footer">
     <div class="modal-content">
-        <form><!--action="/upload" method='POST' enctype='multipart/form-data'-->
+        <form id="formModal" action="" method='POST' enctype='multipart/form-data'>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">account_circle</i>
@@ -48,56 +48,44 @@
                 </div>
             </div>
             <div class="row">
-                <div class="file-field input-field">
-                    <div class="btnFoto">
+                <div class="file-field input-field col s12">
+                    <div class="btn">
                         <span>Foto</span>
-                        <input type="file">
+                        <input type="file" name="userPhoto">
                     </div>
                     <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text">
+                        <input name="userPhotoPath" class="file-path validate" type="text">
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="container imgPred">
-                    <img src="img/l0_sprite_01.png" alt="">
-                    <img src="img/l0_sprite_02.png" alt="">
-                    <img src="img/l0_sprite_03.png" alt="">
-                    <img src="img/l0_sprite_04.png" alt="">
-                    <img src="img/l0_sprite_05.png" alt="">
-                    <img src="img/l0_sprite_06.png" alt="">
-                    <img src="img/l0_sprite_07.png" alt="">
-                    <img src="img/l0_sprite_08.png" alt="">
-                    <img src="img/l0_sprite_09.png" alt="">
-                    <img src="img/l0_sprite_10.png" alt="">
-                    <img src="img/l0_sprite_12.png" alt="">
-                    <img src="img/l0_sprite_13.png" alt="">
-                    <img src="img/l0_sprite_14.png" alt="">
-                    <img src="img/l0_sprite_15.png" alt="">
-                    <img src="img/l0_sprite_16.png" alt="">
+                <div class="container imgPred col s12">
+                    <img src="upload/l0_sprite_07.png" alt="">
+                    <img src="upload/l0_sprite_05.png" alt="">
+                    <img src="upload/l0_sprite_12.png" alt="">
+                    <img src="upload/l0_sprite_13.png" alt="">
                 </div>
             </div>
 
         </form>
     </div>
     <div class="modal-footer">
-        <div class="modal-footer">
-            <a id="enviarDatosModal" class="btn-flat waves-effect waves-light" name="action">Aceptar
-            </a>
-        </div>
-
+        <button  class="btn waves-effect waves-light" type="button" name="action" id="enviarDatosModal">Aceptar
+            <!--<i class="material-icons right">send</i>-->
+        </button>
     </div>
 
 </div>
 
 <!--SIDE NAV-->
+
 <ul id="slide-out" class="side-nav fixed">
     <li>
         <div class="userView">
             <div class="background">
-                <img id="sideNavImg" src="img/westworldmaze.png">
+                <img  src="img/background.jpg">
             </div>
-            <img class="circle" src="img/symbol.jpg">
+            <img id="sideNavAvatar" class="circle" src="img/user.png">
             <span id="sideNavNombre" class="white-text name"></span>
             <span id="sideNavEstado" class="white-text email"></span>
         </div>
@@ -107,11 +95,11 @@
         <ul class="collection">
         </ul>
     </div>
-
 </ul>
+
 <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
 
-<!--CONTENIO BRAH-->
+<!--CONTENIDO-->
 
 <div class="main">
     <div class="chatMsg">
@@ -120,6 +108,10 @@
     </div>
 
     <form id="form">
+        <div class="typing">
+
+        </div>
+        <br>
         <div class="input-field inline">
             <input id="m" autocomplete="off"/>
         </div>
@@ -130,5 +122,6 @@
         </div>
     </form>
 </div>
+
 </body>
 </html>

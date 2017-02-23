@@ -3,7 +3,12 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+.ease{
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
 header, .main, footer {
     padding-left: 300px;
 }
@@ -18,6 +23,9 @@ header, .main, footer {
     #m{
         width:90% !important;
     }
+    .chatMsg{
+        margin-bottom:10% !important;
+    }
 }
 
 body {
@@ -27,13 +35,22 @@ body {
 
 .chatMsg{
     overflow: hidden;
-    margin-bottom:2%;
+    margin-bottom:4%;
 }
 
 #messages {
     padding-left: 1%;
 }
-
+.msgOtros{
+    float: left;
+    clear: both;
+}
+.msgYo{
+    background-color: lightgreen !important;
+    float: right;
+    clear: both;
+    margin-right: 7%;
+}
 #messages li div {
     border-radius: 5px;
     background-color: white;
@@ -47,7 +64,10 @@ body {
 #messages li {
     margin-bottom: 10px;
 }
-
+#form{
+    position: fixed;
+    bottom: 2%;
+}
 #m {
     position: fixed;
     bottom: 2%;
@@ -64,6 +84,9 @@ body {
     cursor: pointer;
     width: 100%;
 }
+.imgPred {
+    text-align: center;
+}
 .imgPred img{
-    margin-left:15px;
+    display:inline-block;
 }
