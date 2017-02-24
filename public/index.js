@@ -132,9 +132,11 @@ $(document).ready(function () {
         }
     });
 
-    $("#connectedUsers li").click(
+
     //CREAR NUEVO CHAT PRIVADO
-        
+    $("#connectedUsers li").click(
+
+
     );
 
 
