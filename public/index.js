@@ -1,6 +1,6 @@
 var users = [];
 var socket = io();
-var nick, estado, avatar="";
+var nick, estado, avatar = "";
 var timeout;
 $(document).ready(function () {
 
@@ -26,9 +26,9 @@ $(document).ready(function () {
         $(this).addClass("ease z-depth-2 ");
         avatar = $(this).attr("src");
         console.log(avatar);
-       /* $("#userPhoto").val($(this).attr("src"));
+        /* $("#userPhoto").val($(this).attr("src"));
 
-        console.log( $("#userPhoto")[0]);*/
+         console.log( $("#userPhoto")[0]);*/
     });
 
     //MODAL BUTTON CLICK EMPIEZA EL CHAT!
@@ -70,7 +70,7 @@ $(document).ready(function () {
                 $(".connectedUsers ul")
                     .append("" +
                         "<li class='collection-item avatar waves-effect'>" +
-                        "<img class='circle' src="+serverUsers[i].avatar+">" +
+                        "<img class='circle' src=" + serverUsers[i].avatar + ">" +
                         "<p><strong>" + serverUsers[i].nombre + "</strong></p>" +
                         "<p><i>" + serverUsers[i].estado + "</i></p>" +
                         "</li>"
@@ -100,8 +100,8 @@ $(document).ready(function () {
         $(window).scrollTop($(".chatMsg")[0].scrollHeight);
     });
 
-    //Emviar Mensaje
-    $('#form').submit(function () {
+    //Enviar Mensaje
+    $('.form').submit(function () {
         data = {"nick": nick, "estado": estado, "msg": $('#m').val()};
         socket.emit('chat message', data);
         $('#m').val('');
@@ -116,13 +116,13 @@ $(document).ready(function () {
     //Activar el typing
     $('#m').keyup(function (e) {
         if (e.key != "Enter") {
-            data = {"nick": nick, "msg": " está escribiendo... "}
+            data = {"nick": nick, "msg": " está escribiendo... "};
             socket.emit('typing', data);
             clearTimeout(timeout);
             timeout = setTimeout(timeoutFunction, 2000);
         }
     });
-    //
+
     socket.on('typing', function (data) {
         console.log(data);
         if (!data) {
@@ -134,10 +134,31 @@ $(document).ready(function () {
 
 
     //CREAR NUEVO CHAT PRIVADO
-    $("#connectedUsers li").click(
+    $(".connectedUsers .collection").on("click", "li", function () {
+        console.log($(this));
+        $(".chatActivo").addClass("chatInactivo");
+        $(".chatActivo").removeClass("chatActivo");
+        $("body").append('' +
+            '<div class="room chatActivo">' +
+                '<div class="chatMsg">' +
+                '<ul id="messages">' +
+                '</ul>' +
+                '</div>' +
 
-
-    );
+                '<form id="form" class="form">' +
+                    '<div class="typing">' +
+                    '</div>' +
+                    '<br>' +
+                        '<div class="input-field inline">' +
+                        '<input id="m" autocomplete="off"/>' +
+                        '</div>' +
+                        '<div class="input-field inline">' +
+                        '<button id="enviarbtn" class="btn waves-effect waves-light" >' +
+                        '<i class="material-icons ">send</i></button>' +
+                    '</div>' +
+                '</form>' +
+            '</div>');
+    });
 
 
 });
@@ -154,15 +175,15 @@ function datosOK() {
     estado = $('#estado').val();
     $('#sideNavNombre').html(nick);
     $('#sideNavEstado').html(estado);
-    if(avatar!=""){
-        $('#sideNavAvatar').attr("src",avatar);
-    }else{
+    if (avatar != "") {
+        $('#sideNavAvatar').attr("src", avatar);
+    } else {
         avatar = "img/user.png";
-        $('#sideNavAvatar').attr("src",avatar);
+        $('#sideNavAvatar').attr("src", avatar);
     }
 
     //emitimos el evento //me meto a mi en el array de usuarios
-    data = {"nick": nick, "estado": estado,"avatar":avatar};
+    data = {"nick": nick, "estado": estado, "avatar": avatar};
     socket.emit("userConnected", data);
 
     //cerramos modal satisfactoriamente

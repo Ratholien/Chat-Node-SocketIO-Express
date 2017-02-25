@@ -1,27 +1,13 @@
 //importa la libreria express,http,socketio
-
-
 var express = require('express');
-var multer = require('multer');
 var app = express();
 var http = require("http").Server(app);
 var io = require('socket.io')(http);
-
-/*var storage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        callback(null, './public/upload');
-    },
-    filename: function (req, file, callback) {
-        callback(null, file.originalname+"");
-    }
-});
-var upload = multer({storage: storage}).single('userPhoto');*/
 
 //array de usuarios totales
 var users = [];
 
 app.use(express.static(__dirname + '/public'));
-
 
 
 
@@ -39,12 +25,15 @@ io.on('connection', function (socket) {
         io.emit("crearListaUsers", users);
         console.log("Usuario Conectado : " + data.nick);
     });
+
     socket.on("typing", function (data) {
         socket.broadcast.emit("typing", data);
     });
+
     socket.on('chat message', function (data) {
         io.emit("mensaje", data);
     });
+
     socket.on('disconnect', function () {
         //eliminar con socket :D
         for (var i = 0; i < users.length; i++) {
@@ -60,21 +49,7 @@ io.on('connection', function (socket) {
 
     });
 });
-//HACER QUE PARE DE RECARGAR!
-/*app.post('/', function (req, res) {
-    upload(req, res, function (err) {
-        if (err) {
-            console.log("Error alsubir el archivo");
-            res.end();
-            /!*return res.end("Error al cargar la imagen.");*!/
-        }
-        console.log("Archivo subido");
-        res.send("index.html");
-        res.end();
-        /!*res.end();*!/
-        /!*res.render("index.html");*!/
-    });
-});*/
+
 
 //Pone el servidor a escuchar el puerto 3000
 http.listen(3000, function () {

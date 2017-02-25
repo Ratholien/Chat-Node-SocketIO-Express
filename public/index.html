@@ -48,17 +48,6 @@
                 </div>
             </div>
             <div class="row">
-                <div class="file-field input-field col s12">
-                    <div class="btn">
-                        <span>Foto</span>
-                        <input type="file" name="userPhoto">
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input name="userPhotoPath" class="file-path validate" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
                 <div class="container imgPred col s12">
                     <img src="upload/l0_sprite_07.png" alt="">
                     <img src="upload/l0_sprite_05.png" alt="">
@@ -101,13 +90,13 @@
 
 <!--CONTENIDO-->
 
-<div class="main">
+<div class="main chatActivo">
     <div class="chatMsg">
         <ul id="messages">
         </ul>
     </div>
 
-    <form id="form">
+    <form id="form" class="form">
         <div class="typing">
 
         </div>
@@ -116,8 +105,7 @@
             <input id="m" autocomplete="off"/>
         </div>
         <div class="input-field inline">
-            <button id="enviarbtn" class="btn waves-effect waves-light"
-                    name="action">
+            <button id="enviarbtn" class="btn waves-effect waves-light">
                 <i class="material-icons ">send</i></button>
         </div>
     </form>
