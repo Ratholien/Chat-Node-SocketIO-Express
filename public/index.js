@@ -26,9 +26,6 @@ $(document).ready(function () {
         $(this).addClass("ease z-depth-2 ");
         avatar = $(this).attr("src");
         console.log(avatar);
-        /* $("#userPhoto").val($(this).attr("src"));
-
-         console.log( $("#userPhoto")[0]);*/
     });
 
     //MODAL BUTTON CLICK EMPIEZA EL CHAT!
@@ -37,7 +34,7 @@ $(document).ready(function () {
         if (nombre === "" || $('#estado').val() === "") {
             Materialize.toast('¡Los campos no pueden estar vacíos!', 4000);
         } else {
-            if (users.indexOf(nombre) == -1) {
+            if (users.indexOf(nombre) === -1) {
                 datosOK();
             } else {
                 Materialize.toast('¡El nombre ya esta en uso!', 4000);
@@ -57,6 +54,7 @@ $(document).ready(function () {
         for (var i = 0; i < serverUsers.length; i++) {
             users.push(serverUsers[i].nombre);
         }
+        console.log(users)
     });
 
 
@@ -69,7 +67,7 @@ $(document).ready(function () {
             if (serverUsers[i].nombre != nick) {
                 $(".connectedUsers ul")
                     .append("" +
-                        "<li class='collection-item avatar waves-effect'>" +
+                        "<li class='collection-item avatar waves-effect waves-purple'>" +
                         "<img class='circle' src=" + serverUsers[i].avatar + ">" +
                         "<p><strong>" + serverUsers[i].nombre + "</strong></p>" +
                         "<p><i>" + serverUsers[i].estado + "</i></p>" +
@@ -90,17 +88,24 @@ $(document).ready(function () {
     });
     //Cuando llega un mensaje
     socket.on("mensaje", function (data) {
-        if (data.msg != "") {
-            if (data.nick === nick) {
-                $('#messages').append($('<li>').addClass("ease").append($('<div>')
+        if (data["cliente"].msg != "") {
+            if (data["cliente"].nick === nick) {
+                $('#messages').append($('<li>').append($('<div>')
                     .addClass("z-depth-2 msgYo ")
-                    .html("<strong>" + data.nick + "</strong><br>" + data.msg)
+                    .html("<strong>" + data["cliente"].nick + "</strong><br>" + data["cliente"].msg)
                 ));
             } else {
-                $('#messages').append($('<li>').append($('<div>')
-                    .addClass("z-depth-2 msgOtros ")
-                    .html("<strong>" + data.nick + "</strong><br>" + data.msg)
-                ));
+                if(data["whisper"]==="no") {
+                    $('#messages').append($('<li>').append($('<div>')
+                        .addClass("z-depth-2 msgOtros ")
+                        .html("<strong>" + data["cliente"].nick + "</strong><br>" + data["cliente"].msg)
+                    ));
+                }else{
+                    $('#messages').append($('<li>').append($('<div>')
+                        .addClass("z-depth-2 msgWhisper ")
+                        .html("<strong>" + data["cliente"].nick + "</strong><br>" + data["cliente"].msg)
+                    ));
+                }
             }
             $('#m').val("");
         }
@@ -131,7 +136,7 @@ $(document).ready(function () {
         Materialize.toast(user + ' se ha desconectado', 4000);
     });
 
-
+//Click en salas para cambiar sala
     $(".btnSala").on("click", function () {
         /*id boton como id sala*/
         var roomId = $(this)[0].id;
@@ -141,10 +146,30 @@ $(document).ready(function () {
 
         //noinspection JSAnnotator
         document.getElementById(roomId).classList += " disabled";
-        Materialize.toast("Has cambiado a "+$(this).html(),4000);
+        Materialize.toast("Has cambiado a " + $(this).html(), 4000);
         //añadir linea divisora
+        $("#messages").append(
+            $('<li>').append($('<hr>').addClass("separador"))
+        );
     });
+//Click en usuarios para mensaje privado
+    $(document).on("click", ".connectedUsers ul li", mensajePrivado)
 });
+//funcion usuarios
+function mensajePrivado() {
+    //botones de sala ON
+    $(".btnSala").removeClass("disabled");
+    //nombre del user
+    var nombre = $(this).find("strong")[0].innerHTML;
+    //nos metemos en la sala de ese user
+    socket.emit("joinRoom2", nombre);
+    //añadir linea divisora
+    $("#messages").append(
+        $('<li>').append($('<hr>').addClass("separador2"))
+    );
+    Materialize.toast("Conversación con "+nombre,5000);
+}
+
 
 //Manda false para quitar el mensaje "escribiendo"
 function timeoutFunction() {

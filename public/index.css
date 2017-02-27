@@ -10,15 +10,6 @@
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
 }
-.separador{
-    float:left;
-    border: 0;
-    height: 1px;
-    background-image: -webkit-linear-gradient(left, #00FFFFFF, #8c8b8b, #00FFFFFF);
-    background-image: -moz-linear-gradient(left, #00FFFFFF, #8c8b8b, #00FFFFFF);
-    background-image: -ms-linear-gradient(left, #00FFFFFF, #8c8b8b, #00FFFFFF);
-    background-image: -o-linear-gradient(left, #00FFFFFF, #8c8b8b, #00FFFFFF);
-}
 
 header, .chatActivo, footer {
     padding-left: 300px;
@@ -66,6 +57,11 @@ body {
     float: right;
     clear: both;
     margin-right: 7%;
+}
+.msgWhisper {
+    float: left;
+    clear: both;
+    background-color: #BE9FB1 !important;
 }
 
 #messages li div {
@@ -119,12 +115,36 @@ body {
 .chatInactivo {
     display: none;
 }
-#btnChatGeneral{
-    background-color:teal !important;
+
+#btnChatGeneral {
+    background-color: teal !important;
 }
-#btnChatRoja{
-  background-color:indianred !important;
+
+#btnChatRoja {
+    background-color: indianred !important;
 }
-#btnChatAmarilla{
+
+#btnChatAmarilla {
     background-color: burlywood !important;
+}
+
+.separador {
+    float: left;
+    clear: both;
+    width: 95%;
+    margin: 1% 0 1% 1%;
+    border: 0;
+    height: 1px;
+    background: teal;
+    background-image: linear-gradient(to right, #ccc, teal, #ccc);
+}
+.separador2 {
+    float: left;
+    clear: both;
+    width: 95%;
+    margin: 1% 0 1% 1%;
+    border: 0;
+    height: 1px;
+    background: #BE9FB1;
+    background-image: linear-gradient(to right, #ccc, #BE9FB1, #ccc);
 }
