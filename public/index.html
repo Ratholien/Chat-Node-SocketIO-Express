@@ -9,7 +9,7 @@
     <!--CSS-->
     <link rel="stylesheet" type="text/css" href="index.css">
     <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <!--JS-->
@@ -67,7 +67,6 @@
 </div>
 
 <!--SIDE NAV-->
-
 <ul id="slide-out" class="side-nav fixed">
     <li>
         <div class="userView">
@@ -78,7 +77,12 @@
             <span id="sideNavNombre" class="white-text name"></span>
             <span id="sideNavEstado" class="white-text email"></span>
         </div>
+        <a id="btnChatGeneral" class="waves-effect waves-light btn btnSala disabled">Sala General</a>
+        <a id="btnChatRoja" class="waves-effect waves-red btn btnSala">Sala Roja</a>
+        <a id="btnChatAmarilla" class="waves-effect waves-yellow btn btnSala">Sala Amarilla</a>
     </li>
+
+
     <!--Lista de Usuarios Conectados  -->
     <div class="connectedUsers">
         <ul class="collection">
@@ -102,7 +106,7 @@
         </div>
         <br>
         <div class="input-field inline">
-            <input id="m" autocomplete="off"/>
+            <input id="m" class="m" autocomplete="off"/>
         </div>
         <div class="input-field inline">
             <button id="enviarbtn" class="btn waves-effect waves-light">

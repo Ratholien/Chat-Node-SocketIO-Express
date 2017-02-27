@@ -19,34 +19,45 @@ io.on('connection', function (socket) {
     socket.on("userConnected", function (data) {
         //Creamos un objeto user con toda la info
         users.push(new User(data.nick, data.estado,data.avatar, socket.id));
+
         //a todos menos a mi les decimos que se ha conectado un usuario
         socket.broadcast.emit("Conectado", data.nick);
         //la lista de conectados se actualiza para todos
         io.emit("crearListaUsers", users);
+        //lo metemos en la sala general
+        socket.username= data.nick;
+        socket.room = "btnChatGeneral";
+        socket.join(socket.room);
+        //mensaje en el server
         console.log("Usuario Conectado : " + data.nick);
+    });
+    socket.on("joinRoom",function (room) {
+        socket.leave(socket.room);
+        socket.room = room;
+        socket.join(room);
     });
 
     socket.on("typing", function (data) {
-        socket.broadcast.emit("typing", data);
+        io.sockets.in(socket.room).emit("typing", data);
     });
 
+    //saber en que sala esta el user que manda el evento
     socket.on('chat message', function (data) {
-        io.emit("mensaje", data);
+        io.sockets.in(socket.room).emit("mensaje", data);
+        /*socket.broadcast.to(socket.room).emit();*/ //manda a todos menos a mi
     });
 
     socket.on('disconnect', function () {
         //eliminar con socket :D
         for (var i = 0; i < users.length; i++) {
             if (socket.id == users[i].socketId) {
-                socket.broadcast.emit("Desconectado", users[i].nombre);
+                io.sockets.in(socket.room).emit("Desconectado", users[i].nombre);
                 console.log("Usuario " + users[i].nombre + " Desconectado");
                 users.splice(i, 1);
                 io.emit("crearListaUsers", users);
                 i = users.length;
             }
         }
-
-
     });
 });
 

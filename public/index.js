@@ -8,7 +8,7 @@ $(document).ready(function () {
     $(".button-collapse").sideNav({
             menuWidth: 300, // Default is 300
             edge: 'left', // Choose the horizontal origin
-            closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+            closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
             draggable: true // Choose whether you can drag to open on touch screens
         }
     );
@@ -32,8 +32,8 @@ $(document).ready(function () {
     });
 
     //MODAL BUTTON CLICK EMPIEZA EL CHAT!
-    $('#enviarDatosModal').on("click", function (e) {
-        var nombre = $('#nombre').val().trim();
+    $('#enviarDatosModal').on("click", function () {
+        var nombre = $("#nombre").val().trim();
         if (nombre === "" || $('#estado').val() === "") {
             Materialize.toast('¡Los campos no pueden estar vacíos!', 4000);
         } else {
@@ -80,11 +80,19 @@ $(document).ready(function () {
         }
     });
 
+    //Enviar Mensaje
+    $(document).on("submit", "form.form", function () {
+        console.log($('.m'));
+        data = {"nick": nick, "estado": estado, "msg": $('#m').val()};
+        socket.emit('chat message', data);
+        $('#m').val('');
+        return false;
+    });
     //Cuando llega un mensaje
     socket.on("mensaje", function (data) {
         if (data.msg != "") {
             if (data.nick === nick) {
-                $('#messages').append($('<li>').append($('<div>')
+                $('#messages').append($('<li>').addClass("ease").append($('<div>')
                     .addClass("z-depth-2 msgYo ")
                     .html("<strong>" + data.nick + "</strong><br>" + data.msg)
                 ));
@@ -96,21 +104,8 @@ $(document).ready(function () {
             }
             $('#m').val("");
         }
-        //Mantener el chat abajo
+        //Mantener los mensajes abajo
         $(window).scrollTop($(".chatMsg")[0].scrollHeight);
-    });
-
-    //Enviar Mensaje
-    $('.form').submit(function () {
-        data = {"nick": nick, "estado": estado, "msg": $('#m').val()};
-        socket.emit('chat message', data);
-        $('#m').val('');
-        return false;
-    });
-
-
-    socket.on("Desconectado", function (user) {
-        Materialize.toast(user + ' se ha desconectado', 4000);
     });
 
     //Activar el typing
@@ -119,7 +114,7 @@ $(document).ready(function () {
             data = {"nick": nick, "msg": " está escribiendo... "};
             socket.emit('typing', data);
             clearTimeout(timeout);
-            timeout = setTimeout(timeoutFunction, 2000);
+            timeout = setTimeout(timeoutFunction, 1500);
         }
     });
 
@@ -132,35 +127,23 @@ $(document).ready(function () {
         }
     });
 
-
-    //CREAR NUEVO CHAT PRIVADO
-    $(".connectedUsers .collection").on("click", "li", function () {
-        console.log($(this));
-        $(".chatActivo").addClass("chatInactivo");
-        $(".chatActivo").removeClass("chatActivo");
-        $("body").append('' +
-            '<div class="room chatActivo">' +
-                '<div class="chatMsg">' +
-                '<ul id="messages">' +
-                '</ul>' +
-                '</div>' +
-
-                '<form id="form" class="form">' +
-                    '<div class="typing">' +
-                    '</div>' +
-                    '<br>' +
-                        '<div class="input-field inline">' +
-                        '<input id="m" autocomplete="off"/>' +
-                        '</div>' +
-                        '<div class="input-field inline">' +
-                        '<button id="enviarbtn" class="btn waves-effect waves-light" >' +
-                        '<i class="material-icons ">send</i></button>' +
-                    '</div>' +
-                '</form>' +
-            '</div>');
+    socket.on("Desconectado", function (user) {
+        Materialize.toast(user + ' se ha desconectado', 4000);
     });
 
 
+    $(".btnSala").on("click", function () {
+        /*id boton como id sala*/
+        var roomId = $(this)[0].id;
+        //join room
+        socket.emit("joinRoom", roomId);
+        $(".btnSala").removeClass("disabled");
+
+        //noinspection JSAnnotator
+        document.getElementById(roomId).classList += " disabled";
+        Materialize.toast("Has cambiado a "+$(this).html(),4000);
+        //añadir linea divisora
+    });
 });
 
 //Manda false para quitar el mensaje "escribiendo"
